@@ -4,19 +4,23 @@ import Szuro from "../view/szuro.js";
 import Tabla from "../view/tabla.js";
 
 class Controller {
-
+    dataService = new DataService();
   constructor() {
-    const dataService = new DataService();
-    dataService.getData(
+    this.dataService.getData(
+        `http://localhost:8000/api/bejegyzesek`,
+        this.tabla
+      );
+    this.dataService.getData(
       `http://localhost:8000/api/osztalyok`,
       this.szuro,
       this.megjelenitHiba
     );
-    dataService.getData(
-      `http://localhost:8000/api/bejegyzesek`,
-      this.#tablazat,
-      this.megjelenitHiba
-    );
+  
+  }
+
+  tabla(obj) {
+    console.log(obj);
+    new Tabla($("#tablazat"), obj, tablazat);
   }
 
   szuro(obj) {
@@ -29,31 +33,27 @@ class Controller {
       if (id == "mindegyik") {
         console.log(id);
         $("#tablazat").empty();
-        dataService.getData(
+        console.log(tabla);
+        this.dataService.getData(
             `http://localhost:8000/api/bejegyzesek`,
-            this.#tablazat,
-            this.megjelenitHiba
+            this.tabla
+        
           );
       } else {
         console.log(id);
         $("#tablazat").empty();
-        dataService.getData(
+        this.dataService.getData(
           `http://localhost:8000/api/bejegyzesek/${id}`,
-          this.#tablazat,
-          this.megjelenitHiba
+          this.tabla
         );
       }
     });
   }
 
-  #tablazat(obj) {
-    console.log(obj);
-    new Tabla($("#tablazat"), obj, tablazat);
-  }
 
 
 
 
-  megjelenitHiba(hiba) {}
+
 }
 export default Controller;

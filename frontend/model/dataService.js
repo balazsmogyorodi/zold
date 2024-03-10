@@ -4,7 +4,7 @@ class DataService {
     }
 
 
-    getData(vegpont, callback, hibaCallback) {
+    getData(vegpont, callback) {
         axios.get(vegpont)
             .then(function (response) {
                 console.log("response", response);
@@ -12,11 +12,12 @@ class DataService {
                 console.log("statusz", response.status);
                 console.log("statusz", response.request.status);
                 console.log("text", response.statusText);
+                console.log(callback);
                 callback(response.data);
             })
             .catch(function (error) {
                 console.log(error);
-                hibaCallback(error);
+                
             })
             .finally(function () {
                 // always executed
