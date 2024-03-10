@@ -4,13 +4,14 @@ import Szuro from "../view/szuro.js";
 import Tabla from "../view/tabla.js";
 
 class Controller {
-    dataService = new DataService();
+   
   constructor() {
-    this.dataService.getData(
+    const dataService = new DataService();
+    dataService.getData(
         `http://localhost:8000/api/bejegyzesek`,
         this.tabla
       );
-    this.dataService.getData(
+    dataService.getData(
       `http://localhost:8000/api/osztalyok`,
       this.szuro,
       this.megjelenitHiba
@@ -34,17 +35,16 @@ class Controller {
         console.log(id);
         $("#tablazat").empty();
         console.log(tabla);
-        this.dataService.getData(
+        dataService.getData(
             `http://localhost:8000/api/bejegyzesek`,
-            this.tabla
-        
+            tabla
           );
       } else {
         console.log(id);
         $("#tablazat").empty();
-        this.dataService.getData(
+        dataService.getData(
           `http://localhost:8000/api/bejegyzesek/${id}`,
-          this.tabla
+          tabla
         );
       }
     });
