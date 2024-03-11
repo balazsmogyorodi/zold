@@ -1,17 +1,26 @@
+import TablaTartalom from "./tartalom.js";
+
 class Tabla {
   #fej;
   #tartalom;
   #tablazat;
   #adatok;
   #fejlec;
-  constructor(divElem, adatok, fejlec) {
+  constructor() {
+  }
+
+  tablaElemFelepites(divElem, fejlec){
     divElem.append("<table class='table table-hover'></table>");
     this.#tablazat = divElem.children("table:last-child");
-    this.#adatok = adatok;
     this.#fejlec = fejlec;
-    console.log(this.#adatok[1].osztaly_neve);
     this.tablaFejlec();
-    this.tablaTartalom();
+
+
+  }
+
+  adatFeltoltes(obj){
+    console.log(obj)
+    new TablaTartalom($('table'), obj);
   }
 
   tablaFejlec() {
@@ -25,14 +34,15 @@ class Tabla {
     this.#fej.append(txt);
   }
 
-  tablaTartalom() {
+  tablaTartalom(adatok) {
+    console.log(adatok);
     this.#tablazat.append("<tbody></tbody>");
     this.#tartalom = this.#tablazat.children("tbody:last-child");
     let txt = "";
     for (let index = 0; index < this.#adatok.length; index++) {
       txt += "<tr>";
-      txt += `<td>${this.#adatok[index].osztaly_neve}</td><td>${this.#adatok[index].tevekenyseg_nev}</td><td>${this.#adatok[index].pontszam}`;
-      if(this.#adatok[index].allapot){
+      txt += `<td>${adatok[index].osztaly_neve}</td><td>${adatok[index].tevekenyseg_nev}</td><td>${adatok[index].pontszam}`;
+      if(adatok[index].allapot){
         txt += "<td>elfogadva</td>"
       } else{
         txt += "<td>jóváhagyásra vár</td>"

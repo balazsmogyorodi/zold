@@ -7,22 +7,20 @@ class Controller {
    
   constructor() {
     const dataService = new DataService();
+    const tabla = new Tabla();
+    tabla.tablaElemFelepites($("#tablazat"), tablazat)
     dataService.getData(
         `http://localhost:8000/api/bejegyzesek`,
-        this.tabla
-      );
+        tabla.adatFeltoltes
+      );  
     dataService.getData(
       `http://localhost:8000/api/osztalyok`,
       this.szuro,
       this.megjelenitHiba
     );
-  
   }
 
-  tabla(obj) {
-    console.log(obj);
-    new Tabla($("#tablazat"), obj, tablazat);
-  }
+ 
 
   szuro(obj) {
     const dataService = new DataService();
@@ -30,21 +28,24 @@ class Controller {
     const szuroElem = $("#szuro");
     new Szuro(szuroElem, obj);
     $(window).on("osztaly_szures", (event) => {
+      const tabla = new Tabla();
       let id = event.detail;
       if (id == "mindegyik") {
         console.log(id);
         $("#tablazat").empty();
+        tabla.tablaElemFelepites($("#tablazat"), tablazat)
         console.log(tabla);
         dataService.getData(
             `http://localhost:8000/api/bejegyzesek`,
-            tabla
+            tabla.adatFeltoltes
           );
       } else {
-        console.log(id);
         $("#tablazat").empty();
+        tabla.tablaElemFelepites($("#tablazat"), tablazat)
+        console.log(id);
         dataService.getData(
           `http://localhost:8000/api/bejegyzesek/${id}`,
-          tabla
+          tabla.adatFeltoltes
         );
       }
     });
